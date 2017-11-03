@@ -1,6 +1,8 @@
 package cn.cerc.watchdog.forms;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -8,53 +10,65 @@ import org.apache.log4j.Logger;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.JspPage;
+import cn.cerc.watchdog.tools.ECSControler;
 import cn.cerc.watchdog.tools.HttpClientUtil;
 
 public class FrmWelcome extends AbstractForm {
-    private static Logger log = Logger.getLogger(HttpClientUtil.class);
-    private static int times = 0;
-    boolean flag1 = true;
-    boolean flag2 = true;
+    private static Logger log = Logger.getLogger(FrmWelcome.class);
+    private static List<ServerItem> items = new ArrayList<>();
+    private static String myToken = "123456";
+    static {
+        ServerItem item;
+
+        item = new ServerItem("master-linux");
+        item.instanceId = "i-j6c2hqbtt8ujtzblwb28";
+        item.url = "http://47.52.210.166:8080/forms/FrmLogin";
+        items.add(item);
+    }
 
     @Override
     public IPage execute() {
-        JspPage page = new JspPage(this, "common/FrmWatchDog.jsp");
-        Map<String, String> paramsMap = new HashMap<String, String>();
-        paramsMap.put("token", "0");
-        String result1 = HttpClientUtil.get("http://47.91.199.67/forms/FrmLogin", paramsMap, "UTF-8");
-        if (result1 == null) {
-            flag1 = false;
+        JspPage page = new JspPage(this, "common/FrmWelcome.jsp");
+        String token = this.getRequest().getParameter("token");
+        if (token == null || !token.equals(myToken)) {
+            page.setJspFile("common/forBidden.jsp");
+            return page;
         }
-        if (!flag1) {
-            log.info("服务器一异常");
-            // ECSControler ecs = new ECSControler();
-            // ecs.reset("i-j6c2ct08gslpbxsxkqwo");
-        } else {
-            log.info("服务器一正常");
+        for (ServerItem item : items) {
+            if (getServerStatus(item.url)) {
+                item.error = 0;
+                item.status = "正常";
+            } else {
+                item.error += 1;
+                if (item.error > 0)
+                    item.status = "异常";
+            }
+            if (item.error > 3) {
+                try {
+                    ECSControler ecs = new ECSControler();
+                    ecs.reset(item.getInstanceId());
+                    item.status = "重启中";
+                    item.error = -600;
+                } catch (Exception e) {
+                    item.status = e.getMessage();
+                }
+            }
         }
-        String result2 = HttpClientUtil.get("", paramsMap, "UTF-8");
-        if (result2 == null) {
-            flag2 = false;
-        }
-        if (!flag2) {
-            log.info("服务器二异常");
-            // ECSControler ecs = new ECSControler();
-            // ecs.reset("i-j6c2ct08gslpbxsxkqwo");
-        } else {
-            log.info("服务器二正常");
-        }
-        page.add("flag1", flag1);
-        page.add("flag2", flag2);
-        times++;
+        page.add("items", items);
         return page;
 
     }
 
-    public static void main(String[] args) {
-        Map<String, String> paramsMap = new HashMap<String, String>();
-        paramsMap.put("token", "0");
-        String result = HttpClientUtil.get("http://47.91.199.67/forms/FrmLogin", paramsMap, "UTF-8");
-        System.out.println(result);
+    private boolean getServerStatus(String url) {
+        try {
+            Map<String, String> paramsMap = new HashMap<String, String>();
+            paramsMap.put("token", "0");
+            String result1 = HttpClientUtil.get(url, paramsMap, "UTF-8");
+            return result1 != null;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
     }
 
     @Override
