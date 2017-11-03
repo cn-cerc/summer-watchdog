@@ -223,5 +223,5 @@
         </dependency>
     </dependencies>
     <artifactId>watchdog</artifactId>
-    <url>https://github.com/cn-cerc/summer-sample</url>
+    <url>https://github.com/cn-cerc/summer-watchdog</url>
 </project>
