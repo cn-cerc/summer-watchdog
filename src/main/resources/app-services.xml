@@ -6,27 +6,4 @@
     <import resource="classpath*:jbean-service.xml" />
     <import resource="classpath*:jmis-service.xml" />
 
-    <!-- rest 配置范例，仅供测试使用 -->
-    <bean id="Hello1" class="cn.cerc.sample.services.HelloWorld" scope="prototype">
-        <property name="restPath" value="get://*/hello" />
-    </bean>
-    <bean id="Hello2" class="cn.cerc.sample.services.HelloWorld" scope="prototype">
-        <property name="restPath" value="get://*/hello?ordNo" />
-    </bean>
-    <bean id="Hello3" class="cn.cerc.sample.services.HelloWorld" scope="prototype">
-        <property name="restPath" value="get://*/hello?ordNo/status" />
-    </bean>
-    <bean id="Hello4" class="cn.cerc.sample.services.HelloWorld" scope="prototype">
-        <property name="restPath" value="get://*/hello?ordNo/status/remark" />
-    </bean>
-    <bean id="Hello5" class="cn.cerc.sample.services.HelloWorld" scope="prototype">
-        <property name="restPath" value="get://*/hello/world?ordNo/status/remark" />
-    </bean>
-
-    <bean id="ServiceLogin" class="cn.cerc.sample.services.ServiceLogin" scope="prototype">
-        <property name="restPath" value="get://*/public/login" />
-    </bean>
-    <bean id="ServiceUserList" class="cn.cerc.sample.services.ServiceUserList" scope="prototype">
-        <property name="restPath" value="get://*/public/users" />
-    </bean>
 </beans>

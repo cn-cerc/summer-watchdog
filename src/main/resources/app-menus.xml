@@ -9,21 +9,5 @@
             <web process="release" pageno="100" class="cn.cerc.sample.forms.FrmWelcome" />
             <access verlist="4,6,1,2,3,5,0," />
         </item>
-        <item code="FrmDefault" name="首页" proccode="base.default" parent="" hide="true" security="false">
-            <web process="test" pageno="101" class="cn.cerc.sample.forms.FrmDefault" />
-            <access verlist="4,6,1,2,3,5,0," />
-        </item>
-        <item code="FrmDataGrid" name="演示dataGrid表格" proccode="base.default" parent="" hide="true" security="false">
-            <web process="test" pageno="102" class="cn.cerc.sample.forms.FrmDataGrid" />
-            <access verlist="4,6,1,2,3,5,0," />
-        </item>
-        <item code="FrmClientTest" name="终端功能测试" proccode="base.default" parent="" hide="true" security="false">
-            <web process="test" pageno="102" class="cn.cerc.sample.forms.FrmClientTest" />
-            <access verlist="4,6,1,2,3,5,0," />
-        </item>
-        <item code="FrmScanProduct" name="商品批次扫描" proccode="base.default" parent="" hide="true" security="false">
-            <web process="test" pageno="102" class="cn.cerc.sample.forms.FrmScanProduct" />
-            <access verlist="4,6,1,2,3,5,0," />
-        </item>
     </body>
 </html>

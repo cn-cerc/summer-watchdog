@@ -222,6 +222,6 @@
             </exclusions>
         </dependency>
     </dependencies>
-    <artifactId>sample</artifactId>
+    <artifactId>watchdog</artifactId>
     <url>https://github.com/cn-cerc/summer-sample</url>
 </project>
