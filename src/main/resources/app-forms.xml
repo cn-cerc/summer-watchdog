@@ -3,6 +3,6 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-    <bean id="FrmWelcome" class="cn.cerc.sample.forms.FrmWelcome" scope="prototype">
+    <bean id="FrmWelcome" class="cn.cerc.watchdog.forms.FrmWelcome" scope="prototype">
     </bean>
 </beans>

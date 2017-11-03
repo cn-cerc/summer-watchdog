@@ -1,4 +1,4 @@
-package cn.cerc.sample.common;
+package cn.cerc.watchdog.common;
 
 import java.io.File;
 import java.util.ArrayList;

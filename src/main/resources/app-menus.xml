@@ -6,7 +6,7 @@
     </head>
     <body>
         <item code="FrmWelcome" name="欢迎页" proccode="base.product.manage" parent="TBase" hide="true" security="false">
-            <web process="release" pageno="100" class="cn.cerc.sample.forms.FrmWelcome" />
+            <web process="release" pageno="100" class="cn.cerc.watchdog.forms.FrmWelcome" />
             <access verlist="4,6,1,2,3,5,0," />
         </item>
     </body>

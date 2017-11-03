@@ -45,6 +45,6 @@
     </bean>
 
     <!-- 系统菜单定义表 -->
-    <bean id="AppMenus" class="cn.cerc.sample.common.MenuFactory" scope="prototype">
+    <bean id="AppMenus" class="cn.cerc.watchdog.common.MenuFactory" scope="prototype">
     </bean>
 </beans>

@@ -1,4 +1,4 @@
-package cn.cerc.sample.common;
+package cn.cerc.watchdog.common;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
