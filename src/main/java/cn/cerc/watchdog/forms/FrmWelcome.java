@@ -7,10 +7,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import cn.cerc.jbean.core.ServerConfig;
 import cn.cerc.jbean.form.IPage;
+import cn.cerc.jdb.core.IConfig;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.JspPage;
-import cn.cerc.watchdog.tools.ECSControler;
 import cn.cerc.watchdog.tools.HttpClientUtil;
 
 public class FrmWelcome extends AbstractForm {
@@ -20,10 +21,14 @@ public class FrmWelcome extends AbstractForm {
     static {
         ServerItem item;
 
-        item = new ServerItem("master-linux");
-        item.instanceId = "i-j6c2hqbtt8ujtzblwb28";
-        item.url = "http://47.52.210.166:8080/forms/FrmLogin";
-        items.add(item);
+        IConfig config = ServerConfig.getInstance();
+        String hosts[] = config.getProperty("hosts", "").split(",");
+        for (String host : hosts) {
+            item = new ServerItem(host);
+            item.instanceId = config.getProperty(host + ".instanceId");
+            item.url = config.getProperty(host + ".url");
+            items.add(item);
+        }
     }
 
     @Override
@@ -43,16 +48,16 @@ public class FrmWelcome extends AbstractForm {
                 if (item.error > 0)
                     item.status = "异常";
             }
-            if (item.error > 3) {
-                try {
-                    ECSControler ecs = new ECSControler();
-                    ecs.reset(item.getInstanceId());
-                    item.status = "重启中";
-                    item.error = -600;
-                } catch (Exception e) {
-                    item.status = e.getMessage();
-                }
-            }
+            // if (item.error > 3) {
+            // try {
+            // ECSControler ecs = new ECSControler();
+            // ecs.reset(item.getInstanceId());
+            // item.status = "重启中";
+            // item.error = -600;
+            // } catch (Exception e) {
+            // item.status = e.getMessage();
+            // }
+            // }
         }
         page.add("items", items);
         return page;
