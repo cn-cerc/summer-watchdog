@@ -19,12 +19,10 @@ import cn.cerc.jbean.core.AppHandle;
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.PageException;
 import cn.cerc.jbean.form.IForm;
-import cn.cerc.jbean.form.IMenu;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jbean.other.BufferType;
 import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jmis.core.ClientDevice;
-import cn.cerc.jmis.core.IAppMenus;
 import cn.cerc.jmis.core.IFormFilter;
 import cn.cerc.jmis.core.RequestData;
 import cn.cerc.jmis.page.ErrorPage;
@@ -90,13 +88,6 @@ public class StartForms implements Filter {
             info.setRequest(req);
             req.setAttribute("_showMenu_", !ClientDevice.device_ee.equals(info.getDevice()));
             form.setClient(info);
-            // 查找菜单定义
-            IMenu menu = form.getMenu();
-            if (menu == null) {
-                IAppMenus menus = Application.getBean("AppMenus", IAppMenus.class);
-                if (menus != null)
-                    form.setMenu(menus.getItem(formId));
-            }
 
             // 建立数据库资源
             AppHandle handle = new AppHandle();

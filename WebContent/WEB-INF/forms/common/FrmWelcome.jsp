@@ -5,51 +5,107 @@
 <meta http-equiv="refresh" content="1">
 <title>服务器监控平台</title>
 <style>
-    body,table{
+    *{
         padding:0;
         margin:0;
+        box-sizing:border-box;
+        -webkit-box-sizing:border-box;
     }
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        text-align:center;
-        width:100%;
-        border:1px solid #E4E9EC;
+    h1,h2,h3,h4,h5,h6{
+        font-size: 14px;
+        font-weight: normal;
+        color: #666;
+    }
+    body{
+        background: #f4f9ff;
+    }
+    .main-con{
+        width:1200px;
+        margin:0 auto;
+        padding-top:50px;
+    }
+    .main-con>h1{
+        font-size: 50px;
+        color: #0087DB;
+        text-align: center;
+    }
+    .info-item{
+        width: 100%;
+        height: 500px;
+        margin-top: 30px;
+    }
+    .info-item li{
+        display:inline-block;
+        width: 30%;
+        height: 200px;
+        border:1px solid #e6e6e6;
+        border-radius:10px;
+        -webkit-border-radius:10px;
+        background: #fff;
+        padding: 20px;
+        float: left;
+        margin: 0 1.5% 30px;
+    }
+    .info-item li .info-box{
+        width: 100%;
+        height: 100%;
+    }
+    .info-box>h1>span{
+        font-size: 18px;
         color:#333;
+        margin-right: 20px;
     }
-    table tr td,table tr th{
-        padding-top:6px;
-        padding-bottom:6px;
-        border:1px solid #eee;
+    .info-box>h1>img{
+        width: 18px;
+        height: 18px;
     }
-    table tr th{
-        background-color:#F2F2F2
+    .info-box>h2,.info-box>h3,.info-box>a{
+        text-align: center;
     }
-    table tbody tr:nth-child(2n){
-        background-color:#F8FCFF;
+    .info-box>a{
+        color: #3AAADD;
+        font-size: 16px;
+        text-decoration: none;
+        margin-top: 10px;
+        width: 100%;
+        display: inline-block;
+    }
+    .info-box>h2{
+        font-size: 58px;
+        color:#0087DB;
+        margin-bottom: 5px;
+    }
+    .info-box .error{
+        color:#FF1000;
     }
 </style>
 </head>
-<body style="font-size: 2em;">
-<div style="max-width:1200px;margin:0 auto;padding-top:50px;">
-    <table border="1">
-        <tr>
-            <th>主机名</th>
-            <th>状态</th>
-            <th>异常次数</th>
-            <th>检测地址</th>
-        </tr>
-        <tbody>
+<body>
+<div class="main-con">
+    <h1>服务器监控平台</h1>
+    <ul class="info-item">
         <c:forEach items="${items}" var="item">
-            <tr>
-                <td>${item.name}</td>
-                <td>${item.status}</td>
-                <td>${item.error}</td>
-                <td><a target="_blank" href="${item.url}">${item.url}</a></td>
-            </tr>
+            <li>
+                <div class="info-box">
+                    <h1>
+                        <span>${item.name}</span>
+                        <c:choose>
+                            <c:when test="${item.status == '正常'}">
+                                <img src="${cdn}/img/ok.png"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${cdn}/img/error.png"/>
+                            </c:otherwise>
+                        </c:choose>
+                        </h1>
+                    <h2 class="${item.status == '正常' ? '' : 'error'}">${item.error}</h2>
+                    <h3>异常次数</h3>
+                    <a target="_blank" href="${item.url}">${item.url}</a>
+                </div>
+            </li>
         </c:forEach>
-        </tbody>
-    </table>
+    </ul>
+    
   </div>
 </body>
 </html>
